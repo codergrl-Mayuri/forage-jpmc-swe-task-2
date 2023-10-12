@@ -15,14 +15,6 @@ interface IState {
  * The parent element of the react app.
  * It renders title, button and Graph react element.
  */
-interface PerspectiveViewerElement extends HTMLElement {
-    load: (table: Table) => void,
-}
-
-componentDidMount(){
-    const elem = document.getElementByTagName('perspective-viewer')[0] as PerspectiveViewerElement;
-}
- 
 class App extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
@@ -51,15 +43,6 @@ class App extends Component<{}, IState> {
     let x=0;
     const interval = setInterval(()=>{
         DataStreamer.getData((serverResponds: ServerRespond[]) => {
-          elem.setAttribute('view', 'y_line');
-          elem.setAttribute('column-pivots', '["stock"]');
-          elem.setAttribute('row-pivots', '["timestamp"]');
-          elem.setAttribute('columns', '["top_ask_price"]');
-          elem.setAttribute('aggregates',`
-                {"stock":"distinct count",
-                 "top_ask_price":"avg",
-                 "top_bid_price":"avg",
-                 "timestamp":"distinct count"}`);
           this.setState({ 
               data: serverResponds,
               showGraph: true,
